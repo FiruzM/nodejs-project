@@ -1,17 +1,14 @@
-import { startups } from "../data/data.js";
+import { products } from "../data/data.js";
 
 export const getDataByPathParamController = (req, res) => {
   const { field, term } = req.params;
-  const allowedFields = ["country", "continent", "industry"];
+  const allowedFields = ["id"];
   if (!allowedFields.includes(field)) {
     return res.status(400).json({
-      message:
-        "Search field not allowed. Please use only 'country', 'continent', 'industry'",
+      message: "Search field not allowed. Please use only by 'category'",
     });
   }
-  const filteredData = startups.filter(
-    (item) => item[field].toLocaleLowerCase() === term.toLocaleLowerCase()
-  );
+  const filteredData = products.find((item) => item[field] === +term);
 
   res.json(filteredData);
 };
